@@ -31,10 +31,32 @@ export class SocketIoService {
 
   } 
 
+  public onlineUserList(){
+    return Observable.create((observer)=>{
+      this.socket.on("online-user-list", (data)=>{
+        observer.next(data);
+      });
+    });
+  }
+
    public setOnline = (authToken) => {
     console.log("verifyUser");
     this.socket.emit("set-user", authToken);
 
   } 
+
+public sendMessage = () => {
+    let x = {                   senderName: 'Abc Xyze',
+                                senderId: 'xx2-eI9kC',
+                                receiverName: 'Surbhi',
+                                receiverId: 'pUj7fBmie',
+                                message: 'Hey Back',
+                                createdOn: new Date()
+                            }
+    console.log("send chat Message");
+    this.socket.emit("chat-msg", x);
+
+  } 
+
 
 }

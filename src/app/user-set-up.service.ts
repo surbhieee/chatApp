@@ -33,5 +33,11 @@ setAuthToken(authToken){
   login(userData){
     return this._httpClient.post(`${this.loginURL}`, userData);
   }
+ public getChat(): Observable<any> {
+   console.log("Service Getchat");
+    return this._httpClient.get(`https://chatapi.edwisor.com/api/v1/chat/get/for/user?senderId=pUj7fBmie&receiverId=xx2-eI9kC&authToken=${this.authToken}`)
+      .do(data => console.log('Data Received'));
+
+  } // end logout function
 
 }

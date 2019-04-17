@@ -14,6 +14,7 @@ export class ChatBoxComponent implements OnInit {
   ngOnInit() {
     this.verifyUserConfirmation();
     this.setOnline();
+    this.getOnlineUserList();
   }
 
   public verifyUserConfirmation: any = () => {
@@ -21,12 +22,26 @@ export class ChatBoxComponent implements OnInit {
     var x = this._socketioservice.verifyUser();
     console.log(x);
     x.subscribe((data) => {
-        console.log(data);
+        console.log(data["data"]);
         //this.disconnectedSocket = false;
 
         //this.SocketService.setUser(this.authToken);
 
       });
+    }
+
+public getChat(){
+  console.log("component getCHat");
+  var x = this._usersetupservice.getChat();
+  x.subscribe(
+    data=> {console.log(data)}
+  )
+}
+    public getOnlineUserList(){
+      var userList = this._socketioservice.onlineUserList();
+      userList.subscribe(
+        data=> {console.log(data);}
+      )
     }
 
 public setOnline: any = () => {
@@ -36,5 +51,8 @@ public setOnline: any = () => {
     
     }
 
-
+sendMsg()
+{
+  this._socketioservice.sendMessage();
+}
 }
