@@ -1,0 +1,40 @@
+import { Injectable } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
+
+import { Observable } from 'rxjs';
+
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/toPromise';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SocketIoService {
+
+  constructor(private socket: Socket) { 
+    
+  }
+
+  public verifyUser = () => {
+    console.log("verifyUser");
+    return Observable.create((observer) => {
+
+      this.socket.on('verifyUser', (data) => {
+
+        observer.next(data);
+
+      }); // end Socket
+
+    }); // end Observable
+
+  } 
+
+   public setOnline = (authToken) => {
+    console.log("verifyUser");
+    this.socket.emit("set-user", authToken);
+
+  } 
+
+}

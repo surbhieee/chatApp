@@ -1,3 +1,43 @@
-<p>
-  signup works!
-</p>
+<div class="container">
+  <div class="row"> 
+    <div >
+      <div >
+      <label class="col-md-4">FirstName: </label>
+      <input class="col-md-4" type="text" name="" placeholder="userName" [(ngModel)]="userName"/>
+    </div>
+      
+      
+    <div >
+      <label class="col-md-4">LastName: </label>
+      <input class="col-md-4" type="text" name="" placeholder="userLastname" [(ngModel)]="userLastname"/>
+    </div>
+      
+      
+    <div >
+      <label class="col-md-4">Email: </label>
+      <input class="col-md-4" type="email" name="" placeholder="email Id" [(ngModel)]="email"/>
+    </div>
+      
+      
+    <div >
+      <label class="col-md-4">Mobile Number: </label>
+      <input class="col-md-4" type="text" name="" placeholder="userPhnNumber" [(ngModel)]="userPhnNumber"/>
+    </div>
+      
+      
+    <div >
+      <label class="col-md-4">password: </label>
+      <input class="col-md-4" type="password" name="" placeholder="password" [(ngModel)]="password"/>
+    </div>
+      
+      <label class="col-md-4">api Key: </label>
+      <input class="col-md-4" type="text" name="" placeholder="apiKey" [(ngModel)]="apiKey"/>
+    
+    <div > <a class="btn btn-warning" (click)="signUpClick()">Sign Up </a>
+    </div>
+    </div>
+    
+    </div>
+</div>
+
+<a (click)='goToLogin()'>Home</a>
