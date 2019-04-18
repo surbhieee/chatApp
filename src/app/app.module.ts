@@ -5,7 +5,9 @@ import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './user/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {UserModule} from './user/user.module'
-import {ChatBoxModule} from './chat-box/chat-box.module'
+import {ChatBoxModule} from './chat-box/chat-box.module';
+import { FilterUserListPipe } from './filter-user-list.pipe'
+import { CookieService } from 'ngx-cookie-service';
 
 const route = [{ path: 'login', component: LoginComponent, pathMatch: 'full' },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -13,7 +15,8 @@ const route = [{ path: 'login', component: LoginComponent, pathMatch: 'full' },
       { path: '**', component: LoginComponent }];
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FilterUserListPipe
   ],
   imports: [FormsModule,
     ChatBoxModule,
@@ -21,7 +24,7 @@ const route = [{ path: 'login', component: LoginComponent, pathMatch: 'full' },
     UserModule,
     RouterModule.forRoot(route)
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SocketIoService} from '../../socket-io.service'
 import {UserSetUpService} from '../../user-set-up.service'
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-chat-box',
@@ -8,8 +9,9 @@ import {UserSetUpService} from '../../user-set-up.service'
   styleUrls: ['./chat-box.component.css']
 })
 export class ChatBoxComponent implements OnInit {
-
-  constructor(private _socketioservice:SocketIoService, private _usersetupservice: UserSetUpService) { }
+  userList:any=[];
+  messageList:any=[];
+  constructor(private _socketioservice:SocketIoService, private _usersetupservice: UserSetUpService, private _cookieService:CookieService) { }
 
   ngOnInit() {
     this.verifyUserConfirmation();
@@ -30,22 +32,46 @@ export class ChatBoxComponent implements OnInit {
       });
     }
 
-public getChat(){
+public getChat(senderId){
   console.log("component getCHat");
-  var x = this._usersetupservice.getChat();
+  var x = this._usersetupservice.getChat(senderId);
   x.subscribe(
-    data=> {console.log(data)}
+    data=> {
+      console.log(data);
+      this.messageList = data["data"];  
+    }     
+     
   )
 }
     public getOnlineUserList(){
+      
       var userList = this._socketioservice.onlineUserList();
       userList.subscribe(
-        data=> {console.log(data);}
+        data=> {console.log(data);
+          let userList:any = [];
+          let transformedArray;
+          for(var x in data){
+        console.log(x);
+        let temp = {'userId':x, 'userName':data[x]}
+      
+      userList.push(temp);  
+      } console.log(userList);
+      this.userList = this.removeDuplicates(userList,'userId');
+      console.log(this.userList);
+      }
       )
     }
+ 
+   removeDuplicates(myArr, userId) {
+    return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[userId]).indexOf(obj[userId]) === pos;
+    });
+  }
 
-public setOnline: any = () => {
-  let authToken = this._usersetupservice.getAuthToken();
+
+
+setOnline = () => {
+  let authToken = this._cookieService.get('authtoken');
      this._socketioservice.setOnline(authToken);
     //console.log(x);
     

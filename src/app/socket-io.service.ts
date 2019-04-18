@@ -30,6 +30,18 @@ export class SocketIoService {
     }); // end Observable
 
   } 
+  public disconnectedSocket = () => {
+
+    return Observable.create((observer) => {
+
+      this.socket.on("disconnect", () => {
+
+        observer.next();
+
+      }); // end Socket
+
+    });
+  }
 
   public onlineUserList(){
     return Observable.create((observer)=>{
@@ -38,6 +50,7 @@ export class SocketIoService {
       });
     });
   }
+  
 
    public setOnline = (authToken) => {
     console.log("verifyUser");
